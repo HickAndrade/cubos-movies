@@ -27,4 +27,14 @@ export class UserService {
 
         return this.userRepo.findOne({ where: { email } })
     }
+
+    async findById(userId: string, withPassword = false): Promise<User | null> {
+        if(withPassword) {
+            return this.userRepo.createQueryBuilder('user')
+            .addSelect('user.password')
+            .where('user.id = :userId', { id: userId }).getOne();
+        }
+
+        return this.userRepo.findOne({ where: { id: userId } })
+    }
 }
