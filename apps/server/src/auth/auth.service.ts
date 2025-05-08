@@ -1,12 +1,10 @@
-import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CreateUserDTO } from "src/users/dto/user.dto";
 import { UserService } from "src/users/user.service";
 import { JwtService } from "@nestjs/jwt";
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { LoginDTO } from "./dto/login.dto";
 import { User } from "src/users/user.entity";
-
-
 
 
 @Injectable()
@@ -16,7 +14,7 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) {}
 
-    async register(dto: CreateUserDTO): Promise<Omit<User, 'password'>> {
+    async register(dto: CreateUserDTO): Promise<{ token: string }> {
         const exists = await this.userService.findByEmail(dto.email);
 
         if (exists) throw new ConflictException('Email já cadastrado');
@@ -28,8 +26,8 @@ export class AuthService {
             password: hash
         })
 
-        const {password, ...result} = user;
-        return result;
+        const payload = { sub: user.id, email: user.email };
+        return { token: this.jwtService.sign(payload) }
     }
 
     async login(dto: LoginDTO): Promise<{ token: string }> {
@@ -43,6 +41,12 @@ export class AuthService {
         return { token: this.jwtService.sign(payload) }
     }
 
+    async me(userId: string): Promise<Omit<User, 'password'>>{
+        const user = await this.userService.findById(userId)
 
+        if(!user) throw new NotFoundException('Usuário não encontrado');
+        
+        return user
+    }
 
 }
