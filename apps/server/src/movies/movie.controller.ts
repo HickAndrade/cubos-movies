@@ -25,6 +25,10 @@ export class MoviesController {
     }> {
       return this.movieService.findAll(query)
     }
+    @Get('languages')
+    findLanguages(): Promise<string[]> {
+        return this.movieService.findLanguages()
+    }
 
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id: number): Promise<Movie> {
@@ -40,4 +44,5 @@ export class MoviesController {
     delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return this.movieService.delete(id);
     }
+
 }

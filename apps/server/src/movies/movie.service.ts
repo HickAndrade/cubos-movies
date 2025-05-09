@@ -48,6 +48,7 @@ export class MovieService {
         return { data, total, page, lastPage: Math.ceil( total / limit) }
     }
 
+    
     async findOne(id: number): Promise<Movie> {
         const movie = await this.movieRepo.findOne({ where: { id } })
         
