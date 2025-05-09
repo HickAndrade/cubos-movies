@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type FieldValues } from 'react-hook-form'
 import type { ZodTypeAny } from 'zod'
 import { Input } from './ui/Input'
+import { Button } from './ui/Button'
 
 interface Field {
     name: string
@@ -21,11 +22,11 @@ interface AuthFormProps<T> {
 
 export function AuthForm<T extends FieldValues>({ fields, onSubmit, schema, submitLabel, forgotPasswordLink }: AuthFormProps<T>) {
     const { register, handleSubmit, formState: { errors }} = useForm<T>({ resolver: zodResolver(schema) })
-
+    
       return (
         <form
         onSubmit={handleSubmit(onSubmit)}
-        className='w-full max-w-md  mx-auto bg-mauve-dark-3 p-4 rounded-sm shadow-md font-roboto'>
+        className='w-full max-w-md transition-colors mx-auto bg-mauve p-4 rounded-sm shadow-md font-roboto'>
         <div className='flex flex-col gap-4'>
             {fields.map((field) => (
                 <div key={field.name} className='flex flex-col'>
@@ -39,14 +40,10 @@ export function AuthForm<T extends FieldValues>({ fields, onSubmit, schema, subm
                 </div> 
                 ))}
                 <div className='flex justify-between items-center'>
-                <a href={forgotPasswordLink} className="text-sm text-purple-400 hover:underline text-right">
+                <a href={forgotPasswordLink} className="text-sm text-primary-purple hover:underline text-right">
                     Esqueci minha senha
                 </a>
-                <button 
-                type="submit" 
-                className="mt-2 bg-purple-9 hover:bg-purple-700 text-white py-3 px-5 rounded-[2px]">
-                    {submitLabel}
-                </button>
+                <Button variant='primary' type='submit' onClick={() => submitLabel}>Entrar</Button>
                 </div>
             </div>
         </form>

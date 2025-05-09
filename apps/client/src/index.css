@@ -1,7 +1,42 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  --color-mauve-dark-3: oklch(0.25 0.0057 301.13);
-  --color-purple-9: oklch(0.56 0.1829 305.86);
+  
   --font-roboto: "Roboto", sans-serif;
+  --color-theme: #EEEEF0;
+  --color-mauve: #232225;
+
+  --color-primary-purple:#8E4EC6;
+  --color-primary-purple-hover:#9A5CD0;
+  --color-primary-purple-active:#8457AA;
+  --color-primary-purple-disabled:#6F6D78; 
+
+  --color-secondary-purple:#B744F714;
+  --color-secondary-purple-hover:#C150FF2E;
+  --color-secondary-purple-act  ive:#B412F90A;
+  --color-secondary-purple-disabled:#EBEAF814; 
 }
+
+.dark{
+  --color-theme: #1C2024;
+  --color-mauve: #F2EFF3;
+  
+  --color-primary-purple:#8E4EC6;
+  --color-primary-purple-hover:#9A5CD0;
+  --color-primary-purple-active:#8457AA;
+  --color-primary-purple-disabled:#6F6D78; 
+
+  --color-secondary-purple:#B744F714;
+  --color-secondary-purple-hover:#C150FF2E;
+  --color-secondary-purple-active:#B412F90A;
+  --color-secondary-purple-disabled:#EBEAF814; 
+}
+
+
+
+
+
+
+
+
