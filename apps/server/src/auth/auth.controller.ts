@@ -23,7 +23,7 @@ export class AuthController {
 
     @UseGuards(AuthGuard('jwt'))
     @Get('me')
-    async me(@CurrentUserId() userId: string): Promise<Omit<User, 'password'>> {
+    me(@CurrentUserId() userId: string): Promise<Omit<User, 'password'>> {
         return this.authService.me(userId)
     }
 }

@@ -15,9 +15,6 @@ export class AuthService {
     ) {}
 
     async register(dto: CreateUserDTO): Promise<{ token: string }> {
-        const exists = await this.userService.findByEmail(dto.email);
-
-        if (exists) throw new ConflictException('Email já cadastrado');
 
         const hash = await bcrypt.hash(dto.password, 10);
         const user = await this.userService.create({
@@ -45,7 +42,7 @@ export class AuthService {
         const user = await this.userService.findById(userId)
 
         if(!user) throw new NotFoundException('Usuário não encontrado');
-        
+
         return user
     }
 
