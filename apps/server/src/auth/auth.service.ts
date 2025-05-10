@@ -1,10 +1,10 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CreateUserDTO } from "src/users/dto/user.dto";
-import { UserService } from "src/users/user.service";
+import { UserService } from "src/users/users.service";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from 'bcrypt';
 import { LoginDTO } from "./dto/login.dto";
-import { User } from "src/users/user.entity";
+import { User } from "src/users/users.entity";
 
 
 @Injectable()

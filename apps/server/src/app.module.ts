@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './users/user.module';
+import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { MoviesModule } from './movies/movies.module';
 
@@ -22,7 +22,7 @@ import { MoviesModule } from './movies/movies.module';
       })
     }),
     AuthModule,
-    UserModule,
+    UsersModule,
     MoviesModule
   ]
 })

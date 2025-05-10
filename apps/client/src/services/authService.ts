@@ -21,5 +21,9 @@ export const authService = {
   async login(data: LoginInput) {
     const response = await api.post('/auth/login', data)
     return response.data
+  },
+  async getProfile() {
+    const response = await api.get('/auth/me')
+    return response.data
   }
 }
