@@ -3,18 +3,28 @@ import { RootLayout } from "../layout";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { RouteGuard } from "../components/RouteGuard";
+import MoviesPage from "../pages/Movies";
 
 export function AppRoutes() {
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route
+            <Route
                     path="/"
                     element={
-                        <RouteGuard requireAuth={true}>
+                        <RouteGuard requireAuth={false}>
                             <RootLayout>
                                 <></>
+                            </RootLayout>
+                        </RouteGuard>
+                    } />
+                <Route
+                    path="/movies"
+                    element={
+                        <RouteGuard requireAuth={true}>
+                            <RootLayout itemCenter={false}>
+                                <MoviesPage />
                             </RootLayout>
                         </RouteGuard>
                     } />

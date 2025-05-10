@@ -26,7 +26,7 @@ export function AuthForm<T extends FieldValues>({ fields, onSubmit, schema, subm
       return (
         <form
         onSubmit={handleSubmit(onSubmit)}
-        className='w-full max-w-md transition-colors mx-auto bg-mauve p-4 rounded-sm shadow-md font-roboto'>
+        className='w-full max-w-md transition-colors mx-auto bg-mauve-3 p-4 rounded-sm shadow-md font-roboto'>
         <div className='flex flex-col gap-4'>
             {fields.map((field) => (
                 <div key={field.name} className='flex flex-col'>

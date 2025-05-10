@@ -27,7 +27,7 @@ function Navbar() {
           variant="secondary"
           onClick={toggleTheme}
         >
-          {mounted && currentTheme === 'dark' ? 'moon' : 'sun'}
+          {mounted && currentTheme === 'dark' ? 'sun' : 'moon'}
         </Button>
         <Button variant="primary" onClick={signOut}>Logout</Button>
       </div>

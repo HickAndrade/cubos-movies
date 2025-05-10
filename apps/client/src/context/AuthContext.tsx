@@ -12,6 +12,7 @@ interface AuthContextProps {
     isAuth: boolean
     isLoading: boolean
     signOut:() => void
+    setUser: (user: User | null) => void
 }
 
 const AuthContext = createContext({} as AuthContextProps)
@@ -50,7 +51,7 @@ export function AuthProvider({ children }:{ children: React.ReactNode }) {
 
     return (
         <AuthContext.Provider
-        value={{ user, isAuth, isLoading, signOut }}
+        value={{ user, isAuth, isLoading, signOut, setUser }}
         >
             {children}
         </AuthContext.Provider>

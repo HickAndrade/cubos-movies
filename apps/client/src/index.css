@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  
+  --animate-fade-in-scale: fade-in-scale 0.3s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out; 
+  --animate-slide-out-right: slide-out-right 0.3s ease-in; 
+
   --font-roboto: "Roboto", sans-serif;
-  --color-theme: #EEEEF0;
-  --color-mauve: #232225;
+  
+  --color-theme: #1C2024;
+  --color-mauve-3: #F2EFF3;
+  --color-mauve-alpha-3: #30004010;
+
+  --color-mauve-11:#65636D;
 
   --color-primary-purple:#8E4EC6;
   --color-primary-purple-hover:#9A5CD0;
@@ -19,9 +28,11 @@
 }
 
 .dark{
-  --color-theme: #1C2024;
-  --color-mauve: #F2EFF3;
-  
+  --color-theme: #EEEEF0;
+  --color-mauve-3: #232225;
+  --color-mauve-alpha-3: #EBEAF814;
+  --color-mauve-11:#B5B2BC;
+
   --color-primary-purple:#8E4EC6;
   --color-primary-purple-hover:#9A5CD0;
   --color-primary-purple-active:#8457AA;
@@ -35,8 +46,32 @@
 
 
 
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
+@Keyframes slide-in-right {
+  0%{
+    transform: translateX(100%)
+  }
+  100%{
+    transform: translateX(0)
+  }
+}
 
-
-
+@Keyframes slide-out-right {
+  0%{
+    transform: translateX(0)
+  }
+  100%{
+    transform: translateX(100%)
+  }
+}
 
