@@ -20,11 +20,10 @@ export function Pagination({
       <Button
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
-        variant="secondary"
+        variant={ page === 1 ? "secondary" : "primary"}
         aria-label="Página anterior"
-        className="w-10 h-10 p-0 flex items-center justify-center"
       >
-        <LeftArrowIcon />
+        <LeftArrowIcon className="" />
       </Button>
 
       {pageNumbers.map((p) => (

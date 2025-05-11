@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import type { CreateMovieData, RawMovieFormData } from "../../schemas/createMovie.schema";
+import type { RawMovieFormData } from "../../schemas/createMovie.schema";
 import { movieService } from "../../services/movieService";
 import { Drawer } from "../ui/Drawer"
 import MovieForm from "./MovieForm"
@@ -9,16 +9,18 @@ import CloseIcon from "../icons/Close";
 interface CreateMovieDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  onCreated: () => void;
 }
 
-function CreateMovieDrawer({ isOpen, onClose }: CreateMovieDrawerProps) {
+function CreateMovieDrawer({ isOpen, onClose, onCreated }: CreateMovieDrawerProps) {
   const [loading, setLoading] = useState(false)
 
   async function handleCreate(data: RawMovieFormData) {
     try {
+      onCreated
       setLoading(true)
-
-      await movieService.create(data, data.coverImageFile);
+      
+      await movieService.create(data);
     
       onClose()
     } catch (err) {
@@ -42,6 +44,7 @@ function CreateMovieDrawer({ isOpen, onClose }: CreateMovieDrawerProps) {
       <MovieForm
         onSubmit={handleCreate}
         onCancel={onClose}
+        isLoading={loading}
       />
     </Drawer>
   )

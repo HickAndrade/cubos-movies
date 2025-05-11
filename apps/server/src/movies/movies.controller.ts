@@ -50,9 +50,15 @@ export class MovieController {
     }
 
     @Patch(':id')
-    update(@Param('id', ParseIntPipe) id: number, data: UpdateMovieDTO): Promise<Movie> {
-        return this.movieService.update(id, data);
+    @UseInterceptors(FileInterceptor('file', {
+      storage: memoryStorage(),
+      limits: { fileSize: 5 * 1024 * 1024 } }))
+    update(
+      @Param('id', ParseIntPipe) id: number,
+      @Body() data: UpdateMovieDTO, @UploadedFile() file?: Express.Multer.File): Promise<Movie> {
+      return this.movieService.update(id, data, file);
     }
+    
 
     @Delete(':id')
     delete(@Param('id', ParseIntPipe) id: number): Promise<void> {

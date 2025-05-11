@@ -30,7 +30,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
         className={`bg-zinc-900 p-6 rounded-xl shadow-md w-full max-w-lg ${animation}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {title && <h2 className="text-white text-2xl mb-4 font-bold">{title}</h2>}
+        {title && <h2 className="text-theme text-2xl mb-4 font-bold">{title}</h2>}
         {children}
       </div>
     </div>

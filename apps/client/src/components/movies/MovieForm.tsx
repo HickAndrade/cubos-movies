@@ -10,9 +10,10 @@ interface MovieFormProps {
   onCancel: () => void
   initialData?: Partial<CreateMovieData & { id: number }>
   isEdit?: boolean
+  isLoading?: boolean;
 }
 
-function MovieForm({ onSubmit, onCancel, initialData, isEdit = false }: MovieFormProps) {
+function MovieForm({ isLoading, onSubmit, onCancel, initialData, isEdit = false }: MovieFormProps) {
   const {
     control,
     register,
@@ -77,7 +78,7 @@ function MovieForm({ onSubmit, onCancel, initialData, isEdit = false }: MovieFor
         <Button type="button" variant="secondary" onClick={onCancel}>
           Cancelar
         </Button>
-        <Button type="submit" variant="primary">
+        <Button isLoading={isLoading} type="submit" variant="primary">
           {isEdit ? "Salvar Alterações" : "Adicionar Filme"}
         </Button>
       </div>

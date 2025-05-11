@@ -27,7 +27,10 @@ export class S3Service {
 
             return `https://${this.bucket}.s3.${this.config.get('AWS_REGION')}.amazonaws.com/${key}`
 
+
         } catch (error) {
+            console.error('Erro ao enviar para o S3', error);
+
             throw new InternalServerErrorException('Falha ao enviar arquivo para S3')
         }
     }

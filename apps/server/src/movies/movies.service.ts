@@ -26,12 +26,14 @@ export class MovieService {
           ...data,
           voteAverage,
         })
-        
+
         if (file) {
+            
             const url = await this.s3.uploadFile(file.buffer, file.originalname, file.mimetype)
             movie.coverImageUrl = url
         }
-      
+        
+        
         return this.movieRepo.save(movie)
       }
       
@@ -92,13 +94,18 @@ export class MovieService {
         return movie;
     }
 
-    async update(id: number, data: UpdateMovieDTO): Promise<Movie> {
+    async update(id: number, data: UpdateMovieDTO, file?: Express.Multer.File): Promise<Movie> {
         const movie = await this.findOne(id);
-    
+      
         if (data.popularity != null) movie.popularity = Number(data.popularity);
         if (data.voteCount != null) movie.voteCount = data.voteCount;
         if (data.genres) movie.genres = data.genres;
-    
+      
+        if (file) {
+            const imageUrl = await this.s3.uploadFile(file.buffer, file.originalname, file.mimetype);
+            movie.coverImageUrl = imageUrl;
+          }
+      
         Object.assign(movie, {
           ...data,
           voteAverage:
@@ -111,9 +118,10 @@ export class MovieService {
                 )
               : movie.voteAverage,
         });
-    
+      
         return this.movieRepo.save(movie);
       }
+      
 
     async delete(id: number): Promise<void> {
         const movie = await this.findOne(id);
