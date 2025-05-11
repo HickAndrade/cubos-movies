@@ -1,19 +1,29 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { MovieService } from "./movies.service";
 import { CreateMovieDTO } from "./dto/CreateMovieDTO";
 import { Movie } from "./movies.entity";
 import { UpdateMovieDTO } from "./dto/UpdateMovieDTO";
 import { FilterMovieDTO } from "./dto/FilterMovieDTO";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { memoryStorage } from 'multer'
+
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('movies')
 export class MovieController {
-    constructor(private readonly movieService: MovieService) {}
+    constructor(
+        private readonly movieService: MovieService
+    ) {}
 
     @Post()
-    create(@Body() data: CreateMovieDTO): Promise<Movie> {
-        return this.movieService.create(data)
+    @UseInterceptors(FileInterceptor('file', {
+        storage: memoryStorage(),
+        limits: { fileSize: 5 * 1024 * 1024 },
+      }))
+      
+    create(@Body() data: CreateMovieDTO, @UploadedFile() file: Express.Multer.File): Promise<Movie> {
+        return this.movieService.create(data, file)
     }
 
     @Get()
@@ -28,6 +38,10 @@ export class MovieController {
     @Get('languages')
     findLanguages(): Promise<string[]> {
         return this.movieService.findLanguages()
+    }
+    @Get('genres')
+    findGenres(): Promise<string[]> {
+        return this.movieService.findGenres()
     }
 
     @Get(':id')
@@ -44,5 +58,6 @@ export class MovieController {
     delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return this.movieService.delete(id);
     }
+    
 
 }

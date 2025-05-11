@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDateString, IsInt, IsOptional, IsString, Min } from "class-validator";
+import { IsArray, IsDateString, IsInt, IsOptional, IsString, Min } from "class-validator";
 
 export class FilterMovieDTO {
 
@@ -38,5 +38,10 @@ export class FilterMovieDTO {
     @IsOptional()
     @IsString()
     language?: string;
+
+    @IsOptional()
+    @IsArray()
+    @IsString({ each: true })
+    genres?:string[];
 
 }

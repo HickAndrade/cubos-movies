@@ -16,7 +16,7 @@ function VoteAverage({ voteAverage }: VoteAverageProps) {
     <div
       className={
         `
-        py-7 px-6 rounded-full border-4 flex items-center justify-center
+        h-24 w-24 rounded-full border-4 flex items-center justify-center
         bg-[#00000080] font-bold text-lg
         ${colorClasses}
       `

@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { MoviesModule } from './movies/movies.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { MoviesModule } from './movies/movies.module';
     }),
     AuthModule,
     UsersModule,
-    MoviesModule
+    MoviesModule,
+    StorageModule
   ]
 })
 export class AppModule {}

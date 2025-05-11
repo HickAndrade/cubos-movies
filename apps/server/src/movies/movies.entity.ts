@@ -44,7 +44,7 @@ export class Movie {
     @Column({ type: 'decimal', precision: 15, scale: 2 })
     revenue: number
 
-    @Column({ type: 'varchar', array: true })
+    @Column({ type: 'varchar', array: true, default: []})
     genres: string[]
 
     @Column({ nullable: true })

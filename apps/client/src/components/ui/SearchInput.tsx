@@ -1,4 +1,5 @@
 import { type InputHTMLAttributes, forwardRef } from 'react'
+import SearchIcon from '../icons/SearchIcon'
 
 interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
@@ -23,7 +24,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           className="bg-transparent font-roboto outline-none w-full placeholder:text-zinc-400"
           placeholder="Pesquise por filmes"
         />
-        
+        <SearchIcon className='text-white' />
       </div>
     )
   }
