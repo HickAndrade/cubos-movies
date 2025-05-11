@@ -1,4 +1,4 @@
-import type { CreateMovieData, RawMovieFormData } from "../schemas/createMovie.schema"
+import type {  RawMovieFormData } from "../schemas/createMovie.schema"
 import type { Movie } from "../types/Movie"
 import { api } from "./api"
 
@@ -27,36 +27,61 @@ export const movieService = {
         return movies.data;
     },
 
-    async getById(id: number): Promise<Movie> {
+    async getById(id: string): Promise<Movie> {
         const res = await api.get(`/movies/${id}`)
         return res.data
       },
 
-      async create(data: RawMovieFormData, file?: File): Promise<Movie> {
-        const form = new FormData()
+      async create(data: RawMovieFormData): Promise<Movie> {
+        const form = new FormData();
+        const { coverImageFile, genres, ...rest } = data;
+      
+        Object.entries(rest).forEach(([key, value]) => {
+          form.append(key, String(value));
+        });
+      
+        form.append("genres", JSON.stringify(genres));
+      
+        if (coverImageFile) {
+          form.append("file", coverImageFile);
+        }
 
-        Object.entries(data).forEach(([key, value]) => {
-            if (key === "coverImageFile") return
-            form.append(key, String(value))
-          })
-        
-          if (file) {
-            form.append("file", file)
-          }
-        
-          const res = await api.post("/movies", form, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
+        const res = await api.post("/movies", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      
+        return res.data;
+      }
+      ,
 
-        return res.data
-      },
-
-      async update(id: number, data: Partial<CreateMovieData>): Promise<Movie> {
-        const res = await api.patch(`/movies/${id}`, data)
-        return res.data
-      },
+      async update(id: number, data: Partial<RawMovieFormData>): Promise<Movie> {
+        const form = new FormData();
+        const { coverImageFile, genres, ...rest } = data;
+      
+        Object.entries(rest).forEach(([key, value]) => {
+          if (value !== undefined && value !== null)
+            form.append(key, String(value));
+        });
+      
+        if (genres) {
+          form.append("genres", JSON.stringify(genres));
+        }
+      
+        if (coverImageFile) {
+          form.append("file", coverImageFile);
+        }
+      
+        const res = await api.patch(`/movies/${id}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      
+        return res.data;
+      }
+      ,
 
       async delete(id: number): Promise<void> {
         await api.delete(`/movies/${id}`)

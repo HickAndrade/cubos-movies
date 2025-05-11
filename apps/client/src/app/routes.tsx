@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { RouteGuard } from "../components/RouteGuard";
 import MoviesPage from "../pages/Movies";
+import MoviePage from "../pages/MoviePage";
 
 export function AppRoutes() {
 
@@ -46,6 +47,16 @@ export function AppRoutes() {
                             </RootLayout>
                         </RouteGuard>
                     } />
+                    <Route
+                        path="/movies/:id"
+                        element={
+                            <RouteGuard requireAuth={true}>
+                            <RootLayout itemCenter={false}>
+                                <MoviePage />
+                            </RootLayout>
+                            </RouteGuard>
+                        }
+                        />
             </Routes>
         </BrowserRouter>
     )

@@ -19,3 +19,7 @@ export interface Movie {
     notified: boolean
   }
   
+  export interface MovieListRef {
+    refetch: () => void;
+  }
+  

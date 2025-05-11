@@ -21,7 +21,7 @@ function Login() {
       
       const profile = await authService.getProfile()
       setUser(profile)
-      
+
       navigate('/movies')
     } catch (err) {
       console.error('Erro ao fazer login', err)
@@ -34,9 +34,12 @@ function Login() {
     <AuthForm<LoginData>
       schema={loginSchema}
       fields={loginFields}
-      onSubmit={handleLogin}
       submitLabel="Entrar"
-      forgotPasswordLink="/forgot-password"
+      onSubmit={handleLogin}
+      alternateAuthLink={{
+        text: "Ainda não tem uma conta? Cadastre-se",
+        to: "/register"
+      }}
     />
   )
 }

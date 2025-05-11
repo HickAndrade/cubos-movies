@@ -35,8 +35,12 @@ function Register() {
     <AuthForm<RegisterData>
       schema={registerSchema}
       fields={registerFields}
-      onSubmit={handleRegister}
       submitLabel="Cadastrar"
+      onSubmit={handleRegister}
+      alternateAuthLink={{
+        text: "Já tem uma conta? Faça login",
+        to: "/login"
+      }}
     />
   )
 }
