@@ -11,7 +11,7 @@ export function MovieCard({ movie }: MovieCardProps) {
       className="
         group
         bg-gray-300 relative rounded shadow-md overflow-hidden
-        w-[235px] h-[355px] sm:w-[183px] sm:h-[281px]
+        sm:w-[235px] sm:h-[355px] w-[183px] h-[281px]
         bg-gradient-to-t from-black/50 to-transparent
       "
     >
@@ -34,9 +34,9 @@ export function MovieCard({ movie }: MovieCardProps) {
         </div>
       )}
 
-      <div className="absolute left-4 right-4 bottom-4 flex flex-col">
+      <div className="absolute font-montserrat left-4 right-4 bottom-4 flex flex-col">
         <h3 className="text-white text-sm md:text-base font-semibold">
-          {movie.title}
+          {movie.title.toUpperCase()}
         </h3>
         <p
           className="
