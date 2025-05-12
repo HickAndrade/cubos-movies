@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12310
+      POSTGRES_DB: cubos_movies
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./apps/server
+    environment:
+      DATABASE_URL: postgres://postgres:12310@postgres:5432/cubos_movies
+      JWT_SECRET: isSecret
+      FRONTEND_URL: http://localhost:4173
+      AWS_S3_BUCKET: cubos-movies
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      FROM_EMAIL: dev@cubos.com
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    command: >
+      sh -c "
+      for i in `seq 1 10`; do
+        npm run migration:run && break || sleep 3;
+      done;
+      npm run start:prod
+      "
+
+  frontend:
+    build:
+      context:

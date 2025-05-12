@@ -1,10 +1,12 @@
-# Cubos Movies
+# Cubos Movies 🎬
 
-Aplicação fullstack para cadastrado, edição, visualização e exclusão de filmes, com autenticação, busca, filtros e envio de e-mail na data de estreia de filmes futuros.
+Aplicação fullstack para cadastro, edição, visualização e exclusão de filmes.
+com autenticação, busca, filtros e envio de e-mail na data de estreia de filmes futuros.
 
 ## Tecnologias
 
 * **Backend**: NestJS (TypeScript)
+* **ORM**: TypeORM
 * **Banco de dados**: PostgreSQL
 * **Frontend**: React (Vite + React + Tailwind CSS + TypeScript)
 * **Armazenamento de imagens**: AWS S3
