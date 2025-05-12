@@ -6,10 +6,13 @@ import { UsersModule } from './users/users.module';
 import { join } from 'path';
 import { MoviesModule } from './movies/movies.module';
 import { StorageModule } from './storage/storage.module';
+import { EmailModule } from './email/email.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -25,7 +28,8 @@ import { StorageModule } from './storage/storage.module';
     AuthModule,
     UsersModule,
     MoviesModule,
-    StorageModule
+    StorageModule,
+    EmailModule
   ]
 })
 export class AppModule {}

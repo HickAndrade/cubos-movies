@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthForm } from '../components/AuthForm'
 import { registerSchema, type RegisterData } from '../schemas/register.schema'
 import { authService } from '../services/authService'
+import { useAuth } from '../context/AuthContext'
 
 
 const registerFields = [
@@ -18,14 +19,21 @@ const registerFields = [
 
 function Register() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
     async function handleRegister(data: RegisterData){
       try {
        
       const response = await authService.register(data);
-       localStorage.setItem('token', response.token)
+      localStorage.setItem('token', response.token)
+      
+      const profile = await authService.getProfile()
+      setUser(profile)
+
         navigate('/movies')
        
+        
+
       } catch (error) {
         console.log('Erro ao registrar:', error)
       }

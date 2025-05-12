@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Controller, useForm, type Resolver } from "react-hook-form"
 import { createMovieSchema, type CreateMovieData, type RawMovieFormData } from "../../schemas/createMovie.schema"
 import { Button } from "../ui/Button"
 import { Input } from "../ui/Input"
+import { FileInputButton } from "../ui/InputFile"
 
 interface MovieFormProps {
   onSubmit: (data: RawMovieFormData) => void
@@ -29,7 +30,8 @@ function MovieForm({ isLoading, onSubmit, onCancel, initialData, isEdit = false 
         }
       : undefined,
   })
- 
+  const [coverFileName, setCoverFileName] = useState<string>("");
+
 
   useEffect(() => {
     if (initialData) {
@@ -60,11 +62,17 @@ function MovieForm({ isLoading, onSubmit, onCancel, initialData, isEdit = false 
           name="coverImageFile"
           rules={{ required: "É preciso escolher uma imagem" }}
           render={({ field }) => (
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => field.onChange(e.target.files)}
-            />
+            <FileInputButton
+      id="coverImage"
+      onChange={(files) => {
+        field.onChange(files);
+        setCoverFileName(files?.[0]?.name || "");
+      }}
+      fileName={coverFileName}
+      variant="primary"
+    >
+      Selecionar Imagem
+    </FileInputButton>
           )}
         />
         {errors.coverImageFile?.message && (

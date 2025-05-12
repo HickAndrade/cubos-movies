@@ -7,6 +7,7 @@ import { UpdateMovieDTO } from "./dto/UpdateMovieDTO";
 import { FilterMovieDTO } from "./dto/FilterMovieDTO";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { memoryStorage } from 'multer'
+import { CurrentUserId } from "src/auth/decorators/current-user.decorator";
 
 
 @UseGuards(AuthGuard('jwt'))
@@ -18,12 +19,16 @@ export class MovieController {
 
     @Post()
     @UseInterceptors(FileInterceptor('file', {
-        storage: memoryStorage(),
-        limits: { fileSize: 5 * 1024 * 1024 },
-      }))
-      
-    create(@Body() data: CreateMovieDTO, @UploadedFile() file: Express.Multer.File): Promise<Movie> {
-        return this.movieService.create(data, file)
+      storage: memoryStorage(),
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }))
+    create(
+      @CurrentUserId() userId: number,
+      @Body() data: CreateMovieDTO,
+      @UploadedFile() file: Express.Multer.File,
+    ): Promise<Movie> {
+    
+        return this.movieService.create(userId, data, file)
     }
 
     @Get()

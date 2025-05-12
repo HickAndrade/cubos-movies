@@ -17,11 +17,11 @@ function CreateMovieDrawer({ isOpen, onClose, onCreated }: CreateMovieDrawerProp
 
   async function handleCreate(data: RawMovieFormData) {
     try {
-      onCreated
+      
       setLoading(true)
       
       await movieService.create(data);
-    
+      onCreated()
       onClose()
     } catch (err) {
       console.error("Erro ao criar filme", err)

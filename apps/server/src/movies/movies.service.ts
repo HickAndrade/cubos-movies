@@ -1,11 +1,12 @@
-import { Injectable, NotFoundException, Param, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Movie } from "./movies.entity";
-import { Repository } from "typeorm";
+import { Between, Repository } from "typeorm";
 import { CreateMovieDTO } from "./dto/CreateMovieDTO";
 import { UpdateMovieDTO } from "./dto/UpdateMovieDTO";
 import { FilterMovieDTO } from "./dto/FilterMovieDTO";
 import { S3Service } from "src/storage/s3.service";
+import { CurrentUserId } from "src/auth/decorators/current-user.decorator";
 
 @Injectable()
 export class MovieService {
@@ -15,7 +16,7 @@ export class MovieService {
     ){}
 
     
-    async create(data: CreateMovieDTO, file?: Express.Multer.File): Promise<Movie> {
+    async create(@CurrentUserId() userId: number, data: CreateMovieDTO, file?: Express.Multer.File): Promise<Movie> {
         const { popularity = 0, voteCount = 0 } = data
       
         const rawAverage = voteCount > 0 ? (Number(popularity) / voteCount) * 100 : 0;
@@ -25,6 +26,7 @@ export class MovieService {
         const movie = this.movieRepo.create({
           ...data,
           voteAverage,
+          userId: userId
         })
 
         if (file) {
@@ -146,5 +148,16 @@ export class MovieService {
     
         return rows.map(r => r.genre);
       }
-    
+      
+      async findReleasesByDate(date: string) {
+        const start = new Date(`${date}T00:00:00`);
+        const end = new Date(`${date}T23:59:59`);
+      
+        return this.movieRepo.find({
+          where: {
+            releaseDate: Between(start, end),
+          },
+          relations: ['user'],
+        });
+    }    
 }

@@ -4,13 +4,16 @@ import { Movie } from './movies.entity';
 import { MovieService } from './movies.service';
 import { MovieController } from './movies.controller';
 import { StorageModule } from 'src/storage/storage.module';
+import { EmailModule } from 'src/email/email.module';
+import { MovieReminderService } from './movie-reminder.service';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Movie]),
-        StorageModule
+        StorageModule,
+        EmailModule
 ],
-    providers: [MovieService],
+    providers: [MovieService, MovieReminderService],
     controllers: [MovieController],
     exports: [MovieService]
 })

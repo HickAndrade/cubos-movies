@@ -46,6 +46,7 @@ export const movieService = {
           form.append("file", coverImageFile);
         }
 
+        
         const res = await api.post("/movies", form, {
           headers: {
             "Content-Type": "multipart/form-data",
